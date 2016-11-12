@@ -50,11 +50,17 @@ body {
 }
 .citation:before {
   content: ", ";
-  font-style: normal;
+  font-blue: normal;
 }
 .year:before {
   content: ", ";
   font-style: normal;
+}
+.tags {
+  font-size: .75rem;
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+  text-align: left;
 }
 
 #loadQuote {
