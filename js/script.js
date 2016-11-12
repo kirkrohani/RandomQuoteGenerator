@@ -2,25 +2,34 @@
 // when user clicks anywhere on the button, the "printQuote" function is called
 document.getElementById('loadQuote').addEventListener("click", printQuote, false);
 
-var quotesGenerated = [];
+// Variable to track if a quote has been generated/dispalyed
+var quotesPreviouslyGenerated = [];
 
-// function which generates a random number between 1 and 8 and then passes that to the quotes arrays
-// and then returns the random quote object from the quotes array
+
+// function which generates a random number between 0 and 7 and then passes that to the quotes arrays
+// and then returns the random quote object from the quotes array. Math.floor(Math.random() * 8)
 function getRandomQuote()
 {
-	//var randomNumber = Math.floor(Math.random() * 8);
 	var aRandomNumber;
-
+		
+	// Once all the quotes have been displayed we want to clear the array and start over again
+	// This also prevents an endless loop in the do/while when all the elements are in the array
+	if (quotesPreviouslyGenerated.length === 8)
+		quotesPreviouslyGenerated.length = 0;
 
 	// Loop through and get a rnadom number until we get one that was not previously provided.
 	do
 	{
 		aRandomNumber = Math.floor(Math.random() * 8);
 
-	}  while (quotesGenerated[aRandomNumber] !== undefined && quotesGenerated[aRandomNumber] === true)
+	}  while (quotesPreviouslyGenerated.includes(aRandomNumber))
 
-	quotesGenerated[aRandomNumber] = true;
+	
+	// Mark the quote as having been generated
+	quotesPreviouslyGenerated.push(aRandomNumber);
+	console.log("Array[" + quotesPreviouslyGenerated +"] length=" + quotesPreviouslyGenerated.length);
 	console.log(aRandomNumber + ' ' + quotes[aRandomNumber].quote);
+	
 	return quotes[aRandomNumber];
 }
 
