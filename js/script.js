@@ -1,6 +1,8 @@
-// event listener to respond to "Show another quote" button clicks
-// when user clicks anywhere on the button, the "printQuote" function is called
+// Event listener to respond to "Show another quote" button clicks
+// When user clicks anywhere on the button, the "printQuote" function is called
+// Interval set to call printQuote every 30 seconds
 document.getElementById('loadQuote').addEventListener("click", printQuote, false);
+window.setInterval(printQuote, 30000);
 
 // Variable to track if a quote has been generated/dispalyed
 var quotesPreviouslyGenerated = [];
@@ -17,7 +19,7 @@ function getRandomQuote()
 	if (quotesPreviouslyGenerated.length === 8)
 		quotesPreviouslyGenerated.length = 0;
 
-	// Loop through and get a rnadom number until we get one that was not previously provided.
+	// Loop through and get a random number until we get one that was not previously provided.
 	do
 	{
 		aRandomNumber = Math.floor(Math.random() * 8);
@@ -25,10 +27,8 @@ function getRandomQuote()
 	}  while (quotesPreviouslyGenerated.includes(aRandomNumber))
 
 	
-	// Mark the quote as having been generated
+	// Add the quote to the array for tracking purposes
 	quotesPreviouslyGenerated.push(aRandomNumber);
-	console.log("Array[" + quotesPreviouslyGenerated +"] length=" + quotesPreviouslyGenerated.length);
-	console.log(aRandomNumber + ' ' + quotes[aRandomNumber].quote);
 	
 	return quotes[aRandomNumber];
 }
@@ -47,16 +47,14 @@ function getRandomColor()
 
 }
 
-// function which takes the random quote object and uses the properties to generate an HTML string
+// Function which takes the random quote object and uses the properties to generate an HTML string
 // to display on the page when the user clicks on the 'show another quote' button
-// if a citation and/or year exist then the HTML string additional displays those properties
 function printQuote()
 {
 	var randomQuote = getRandomQuote();
-	
+	var randomColor = getRandomColor();
+	var quoteHTML = '<p class="quote">' + randomQuote.quote +  '</p>' + '<p class="source"> ' + randomQuote.source;
 
-	var quoteHTML = '<p class="quote">' + randomQuote.quote +  '</p>';
-	quoteHTML +=  '<p class="source"> ' + randomQuote.source;
 	
 	if ("citation" in randomQuote)
 		quoteHTML +=  '<span class="citation">' + randomQuote.citation +  '</span>';
@@ -71,7 +69,7 @@ function printQuote()
 	// Set the quote the newly generated HTML based on what is available in the object
 	document.getElementById('quote-box').innerHTML = quoteHTML;
 
-	var randomColor = getRandomColor();
+	// set both the background and the 'show another quote' button background color otherwise it looks odd 
 	document.body.style.backgroundColor = randomColor;
 	document.getElementById('loadQuote').style.backgroundColor = randomColor;
 
